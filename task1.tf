@@ -86,7 +86,8 @@ depends_on = [
   }
 }
 
-// Creating EBS volume and attaching it to EC2 Instance
+// Creating EBS volume and attaching it to EC2 Instance.
+
 resource "aws_ebs_volume" "HttpdEBS" {
   availability_zone = aws_instance.HttpdInstance.availability_zone
   size              = 1
@@ -127,6 +128,8 @@ provisioner "remote-exec" {
   }
 }
 
+// Creating S3 bucket.
+
 resource "aws_s3_bucket" "httpds3" {
 bucket = "raktim-httpd-files"
 acl    = "public-read"
@@ -141,6 +144,7 @@ resource "aws_s3_bucket_object" "s3_object" {
   acl    = "public-read"
 }
 
+// Creating Cloud Front Distribution.
 
 locals {
 s3_origin_id = aws_s3_bucket.httpds3.id
@@ -229,6 +233,8 @@ cloudfront_default_certificate = true
 retain_on_delete = true
 }
 
+// Changing the html code and adding the image url in that.
+
 resource "null_resource" "HtmlCodeChange"  {
 depends_on = [
     aws_cloudfront_distribution.CloudFrontAccess,
@@ -245,6 +251,9 @@ connection {
     ]
   }
 }
+
+// Creating EBS snapshot volume.
+
 resource "aws_ebs_snapshot" "httpd_snapshot" {
 depends_on = [
     null_resource.HtmlCodeChange,
@@ -255,6 +264,8 @@ depends_on = [
     Name = "Httpd_snap"
   }
 }
+
+// Finally opening the browser to that particular html site to see how It's working.
 
 resource "null_resource" "ChromeOpen"  {
 depends_on = [
