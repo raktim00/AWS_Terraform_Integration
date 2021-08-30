@@ -2,6 +2,8 @@
 
 ## “AWS EC2 Instance, EBS, Key-pair, SG, S3, Cloud Front, Snapshot creation using One single CMD !!” by Raktim Midya - https://link.medium.com/fpERlE5ebab
 
+## Video Demonstration : https://youtu.be/QdyImVPYIT8
+
 ### Task Description:
 
 ##### Have to create/launch Application using Terraform
